@@ -1,4 +1,5 @@
 import sys
+from time import sleep
 from core.main import Core
 
 
@@ -11,8 +12,11 @@ class StoreHub:
     def run_store_hub(self):
         """Main loop"""
         while True:
-            pass
-
+            print('started')
+            self.core.run_app()
+            sleep(3)
+            print('bye')
+            break
 
 
 if __name__ == '__main__':

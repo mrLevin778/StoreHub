@@ -13,3 +13,6 @@ class Core:
         self.dashboard = Dashboard()
         self.api = ExpressApi()
 
+    def run_app(self):
+        print('LOGIN FORM')
+
