@@ -1,28 +1,29 @@
-import os.path
+import os
 import bcrypt
 import json
 
 
 class User:
     """Class for creating user with some role"""
-    FILE_PATH = "users.json"
+    FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "users.json")
 
     def __init__(self, username, password, role="user"):
         self.role = role
         self.username = username
-        self.password = self._hash_password(password)
+        self.password = self.hash_password(password)
 
     @staticmethod
-    def _hash_password(password):
+    def hash_password(password):
         return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
     @staticmethod
     def load_users():
         if not os.path.exists(User.FILE_PATH):
-            with open(User.FILE_PATH, "w") as file:
-                json.dump({}, file)  # create empty json file
+            os.makedirs(os.path.dirname(User.FILE_PATH), exist_ok=True)  # create directory
+            with open(User.FILE_PATH, "w", encoding="UTF-8") as file:
+                json.dump({}, file, indent=4)  # create empty json file
 
-        with open(User.FILE_PATH, "r") as file:
+        with open(User.FILE_PATH, "r", encoding="UTF-8") as file:
             return json.load(file)
 
     @staticmethod
@@ -42,7 +43,8 @@ class User:
         print(f'User {self.username} is created!')
 
     def save_users(users):
-        with open(User.FILE_PATH, "w") as file:
+        os.makedirs(os.path.dirname(User.FILE_PATH), exist_ok=True)
+        with open(User.FILE_PATH, "w", encoding="UTF-8") as file:
             json.dump(users, file, indent=4)
 
     def update_password(username, old_password, new_password):
@@ -54,7 +56,7 @@ class User:
         if not bcrypt.checkpw(old_password.encode(), hashed_password.encode()):
             raise ValueError('Wrong old password!')
         # update password:
-        users[username]['password'] = User._hash_password(new_password)
+        users[username]['password'] = User.hash_password(new_password)
         User.save_users(users)
         print(f'Password for {username} is updated!')
 
