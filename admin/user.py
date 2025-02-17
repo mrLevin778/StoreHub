@@ -1,5 +1,4 @@
 import os.path
-
 import bcrypt
 import json
 
@@ -41,8 +40,13 @@ class User:
     def update_user(self):
         pass
 
-    def delete_user(self):
-        pass
+    def delete_user(self, username):
+        users = User.load_users()
+        if username not in users:
+            raise ValueError(f'User {self.username} is not found!')
+        del users[username]
+        User.save_users(users)
+        print(f'User {self.username} is deleted!')
 
     def user_role(self):
         pass
