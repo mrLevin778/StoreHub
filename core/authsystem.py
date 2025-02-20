@@ -35,7 +35,14 @@ class AuthSystem:
     def start():
         """Starting menu"""
         while True:
-            choice = input('\n1. Enter\n2. Registration\n3. Check user role\n4. Change user role\n5. Exit\nChoice option: ')
+            choice = input(
+                '\n1. Enter'
+                '\n2. Registration'
+                '\n3. Check user role'
+                '\n4. Change user role'
+                '\n5. Exit'
+                '\nChoice option: '
+            )
             if choice == '1':
                 user = AuthSystem.login()
                 if user:

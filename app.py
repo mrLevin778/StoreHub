@@ -13,7 +13,7 @@ class StoreHub:
         while True:
             print('started')
             self.core.run_app()
-            sleep(3)
+            sleep(1)
             print('bye')
             break
 
