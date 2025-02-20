@@ -1,0 +1,14 @@
+{
+    "admin": {
+        "password": "$2b$12$aJYsmCUqlFReO1t8FBDoiewX.3Ki9JYgBbGVZs8WVt/2rxe21xZHC",
+        "role": "admin"
+    },
+    "owner": {
+        "password": "$2b$12$SIP9TGmOZMlHQEfTPfJhhuZl17h5/9XzdhkKJHmd1wZ.4g0QCou32",
+        "role": "owner"
+    },
+    "manager": {
+        "password": "$2b$12$uXlJt.FGSbeKqkylBQdm1O/njuXupJzCtHng0Q5HKv5uC6E5aWAQO",
+        "role": "user"
+    }
+}

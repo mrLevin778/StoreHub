@@ -54,7 +54,7 @@ class AuthSystem:
     def start():
         """Starting menu"""
         while True:
-            choice = input('\n1. Enter\n2. Registration\n3. Exit\nChoice option: ')
+            choice = input('\n1. Enter\n2. Registration\n3. Check user role\n4. Change user role\n5. Exit\nChoice option: ')
             if choice == '1':
                 user = AuthSystem.login()
                 if user:
@@ -63,6 +63,17 @@ class AuthSystem:
             elif choice == '2':
                 AuthSystem.register()
             elif choice == '3':
+                username = input('\nEnter your username, if you want check your role: ')
+                result = User.user_role(username)
+                if result is None:
+                    print(f'Error: incorrect user')
+                else:
+                    print(f'Your role - {result}')
+            elif choice == '4':
+                username = input('\nEnter your username: ')
+                role = input('\nEnter your new role: ')
+                User.set_user_role(username, role)
+            elif choice == '5':
                 print('Exiting...')
                 break
             else:
