@@ -1,4 +1,3 @@
-import sys
 from time import sleep
 from core.main import Core
 
