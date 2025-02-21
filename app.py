@@ -15,7 +15,6 @@ class StoreHub:
             self.core.run_app()
             sleep(1)
             print('bye')
-            break
 
 
 if __name__ == '__main__':

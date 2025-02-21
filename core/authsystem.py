@@ -5,16 +5,13 @@ class AuthSystem:
     """Class for login"""
 
     @staticmethod
-    def login():
+    def login(username: str, password: str):
         """login form"""
-        username = input('Enter your login: ')
-        password = input('Enter your password: ')
         if User.authenticate_user(username, password):
-            print(f'Congratulations, {username}!')
-            return username
-        else:
-            print(f'Incorrect login or password!')
-            return None
+            print('Successfully entry')
+            return True
+        print('Incorrect login of password')
+        return False
 
     @staticmethod
     def register():
@@ -32,8 +29,8 @@ class AuthSystem:
         print(f'User {username} is successfully registered!')
 
     @staticmethod
-    def start():
-        """Starting menu"""
+    def start_terminal():
+        """Starting menu(TERMINAL)"""
         while True:
             choice = input(
                 '\n1. Enter'
@@ -44,7 +41,9 @@ class AuthSystem:
                 '\nChoice option: '
             )
             if choice == '1':
-                user = AuthSystem.login()
+                username = input('Enter your username: ')
+                password = input('Enter your password: ')
+                user = AuthSystem.login(username, password)
                 if user:
                     print('Access allowed')
                     break
