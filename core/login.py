@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox
 from core.authsystem import AuthSystem
-import time
 
 
 class Login(ctk.CTk):

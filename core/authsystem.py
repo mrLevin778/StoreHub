@@ -3,6 +3,7 @@ from admin.user import User
 
 logging.basicConfig(level=logging.INFO)
 
+
 class AuthSystem:
     """Class for login"""
 

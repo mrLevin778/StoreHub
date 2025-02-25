@@ -1,4 +1,3 @@
-from time import sleep
 from core.main import Core
 
 
@@ -13,7 +12,6 @@ class StoreHub:
         while True:
             print('started')
             self.core.run_app()
-            sleep(1)
             print('bye')
 
 
