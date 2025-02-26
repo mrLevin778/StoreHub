@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox
 from core.authsystem import AuthSystem
+from core.config import Config
 
 
 class Login(ctk.CTk):
@@ -9,11 +10,11 @@ class Login(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.auth_system = AuthSystem()
+        self.config = Config()
         self.title('Authorisation Form')
         self.geometry('300x250')
-        self.center_window(300, 250)
-        ctk.set_appearance_mode('dark')
-        ctk.set_default_color_theme('blue')
+        self.center_window()
+        self._apply_settings()
         # label
         self.label = ctk.CTkLabel(self, text='Login to system', font=('Arial', 18))
         self.label.pack(pady=10)
@@ -30,11 +31,19 @@ class Login(ctk.CTk):
         self.terminal_button = ctk.CTkButton(self, text='TERMINAL', command=self.open_terminal)
         self.terminal_button.pack(pady=5)
 
-    def center_window(self, width, height):
+    def _apply_settings(self):
+        """Apply settings from config file"""
+        appearance_mode = self.config.get('appearance_mode')
+        theme_color = self.config.get('theme_color')
+        if appearance_mode:
+            ctk.set_appearance_mode(appearance_mode)
+        if theme_color:
+            ctk.set_default_color_theme(theme_color)
+
+    def center_window(self):
         """Centers the window on the screen"""
         self.update_idletasks()
-        width = self.winfo_width() or 300
-        height = self.winfo_height() or 250
+        width, height = 300, 250
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         x = (screen_width - width) // 2
