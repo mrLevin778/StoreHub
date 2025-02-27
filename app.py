@@ -10,9 +10,7 @@ class StoreHub:
     def run_store_hub(self):
         """Main loop"""
         while True:
-            print('started')
             self.core.run_app()
-            print('bye')
 
 
 if __name__ == '__main__':

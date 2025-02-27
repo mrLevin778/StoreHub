@@ -10,5 +10,13 @@
     "manager": {
         "password": "$2b$12$uXlJt.FGSbeKqkylBQdm1O/njuXupJzCtHng0Q5HKv5uC6E5aWAQO",
         "role": "user"
+    },
+    "cashier": {
+        "password": "$2b$12$JYa4pJ/SO8uHeBqGjS0R3ezh4ps8toqb/BEwHr1sh4kNVC3zgnMQq",
+        "role": "cashier"
+    },
+    "warehouse": {
+        "password": "$2b$12$09t2AZF2FLBuKpqeaWoaju0VOAgW.AUhThNk67sDSaI6.897Ko2Vm",
+        "role": "warehouse manager"
     }
 }

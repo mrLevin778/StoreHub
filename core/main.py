@@ -1,6 +1,6 @@
 import sys
-from sale.pos import Pos
-from storage.wms import Wms
+from sale.pos_ui import PosUI
+from storage.wms_ui import WmsUI
 from admin.dashboard import Dashboard
 from web.expressapi import ExpressApi
 from core.authsystem import AuthSystem
@@ -12,22 +12,22 @@ class Core:
     """Main class of project (CORE)"""
 
     def __init__(self):
-        self.pos = Pos()
-        self.wms = Wms()
-        self.dashboard = Dashboard()
+        #self.pos_ui = PosUI()
+        #self.wms_ui = WmsUI()
+        #self.dashboard = Dashboard()
         self.api = ExpressApi()
         self.login_form = Login()
         self.config = Config()
 
     def run_app(self):
-        print('LOGIN FORM')
         self.config.load_default_config()
-        self.login_form.protocol('WM_DELETE_WINDOW', self.on_close)
+        if hasattr(self, 'login_form') and self.login_form.winfo_exists():
+            self.login_form.protocol('WM_DELETE_WINDOW', self.on_close)
         self.login_form.mainloop()
 
-    @staticmethod
-    def on_close():
-        print('Closing the app...')
+    def on_close(self):
+        """Close login window correct"""
+        self.login_form.destroy()
         sys.exit(0)
 
 

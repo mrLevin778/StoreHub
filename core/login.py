@@ -1,7 +1,14 @@
+import logging
 import customtkinter as ctk
 from tkinter import messagebox
+from sale.pos_ui import PosUI
+from storage.wms_ui import WmsUI
+from admin.dashboard_ui import DashboardUI
 from core.authsystem import AuthSystem
 from core.config import Config
+from admin.user import User
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class Login(ctk.CTk):
@@ -52,22 +59,38 @@ class Login(ctk.CTk):
 
     def authenticate(self):
         """Authenticate user and handle success or failure"""
-        if self.auth_system.login(self.username_entry.get(), self.password_entry.get()):
-            self.on_login_success()
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        if self.auth_system.login(username, password):
+            self.on_login_success(username)
         else:
             messagebox.showerror('Error', 'Incorrect login or password')
 
-    def on_login_success(self):
+    def on_login_success(self, username):
         """Handle successful login"""
-        messagebox.showinfo('Success', 'Access granted!')
-        self.destroy()
-        # place for calling menu or other display
+        print(f'Access granted.')
+        try:
+            role = User.user_role(username)
+            if role is None:
+                raise KeyError(f'User {username} does not have an assigned role.')
+            if role in ['admin', 'owner']:
+                self.destroy()
+                dashboard = DashboardUI()
+                dashboard.mainloop()
+            elif role == 'cashier':
+                self.destroy()
+                pos = PosUI()
+                pos.mainloop()
+            elif role == 'warehouse manager':
+                self.destroy()
+                wms = WmsUI()
+                wms.mainloop()
+            else:
+                logging.warning(f'User {username} does not have any permissions!')
+        except Exception as exc:
+            logging.error(f'Unexpected error occurred: {exc}')
 
     def open_terminal(self):
         """Open terminal via Core"""
         self.destroy()  # close login window
         AuthSystem.start_terminal()
-            
-    
-        
-        

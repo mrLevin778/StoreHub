@@ -21,9 +21,24 @@ class DashboardUI(ctk.CTk):
         # placeholder labels
         ctk.CTkLabel(self.analytics_tab, text='Analytics data here').pack(pady=20)
         ctk.CTkLabel(self.sales_tab, text='Sales data here').pack(pady=20)
-        ctk.CTkLabel(self.settings_tab, text='Settings here').pack(pady=20)
+        self._setup_settings_tab()
 
     def _apply_settings(self):
         """Apply user settings from config"""
-        appearance_mode = self.config.get('appearance_mode')
-        ctk.set_appearance_mode(appearance_mode)
+        theme = self.config.get('appearance_mode')
+        ctk.set_appearance_mode(theme)
+
+    def _setup_settings_tab(self):
+        """Create functional settings tab"""
+        ctk.CTkLabel(self.settings_tab, text='Theme:').pack(pady=5)
+        self.theme_var = ctk.StringVar(value=self.config.get('appearance_mode'))
+        theme_dropdown = ctk.CTkComboBox(
+            self.settings_tab, values=['dark', 'light', 'system'],
+            variable=self.theme_var, command=self._change_theme
+        )
+        theme_dropdown.pack(pady=5)
+
+    def _change_theme(self, new_theme):
+        """Change and save theme"""
+        ctk.set_appearance_mode(new_theme)
+        self.config.set('appearance_mode', new_theme)
