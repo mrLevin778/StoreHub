@@ -1,12 +1,15 @@
 import logging
+import sys
+
 import customtkinter as ctk
 from tkinter import messagebox
 from sale.pos_ui import PosUI
-from storage.wms_ui import WmsUI
+from storage.wms_ui_old import WmsUI
 from admin.dashboard_ui import DashboardUI
 from core.authsystem import AuthSystem
 from core.config import Config
 from admin.user import User
+from PySide6.QtWidgets import QApplication
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -17,10 +20,11 @@ class Login(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.auth_system = AuthSystem()
+        self.app = QApplication(sys.argv)
         self.config = Config()
+        self.center_window()
         self.title('Authorisation Form')
         self.geometry('300x250')
-        self.center_window()
         self._apply_settings()
         # label
         self.label = ctk.CTkLabel(self, text='Login to system', font=('Arial', 18))
@@ -68,7 +72,7 @@ class Login(ctk.CTk):
 
     def on_login_success(self, username):
         """Handle successful login"""
-        print(f'Access granted.')
+        logging.info(f'Access granted.')
         try:
             role = User.user_role(username)
             if role is None:
@@ -79,12 +83,15 @@ class Login(ctk.CTk):
                 dashboard.mainloop()
             elif role == 'cashier':
                 self.destroy()
-                pos = PosUI()
-                pos.mainloop()
+                pos_ui = PosUI()
+                pos_ui.show()
+                sys.exit(self.app.exec())
             elif role == 'warehouse manager':
                 self.destroy()
                 wms = WmsUI()
                 wms.mainloop()
+            elif role == 'user':
+                messagebox.showinfo('Error', f'User {username} does not have role!')
             else:
                 logging.warning(f'User {username} does not have any permissions!')
         except Exception as exc:

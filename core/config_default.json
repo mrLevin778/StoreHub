@@ -4,5 +4,5 @@
     "language": "en",
     "shop_db_type": "sqlite",
     "internal_db_path": "",
-    "shop_db_path": ""
+    "shop_db_path": "db/shop.db"
 }
