@@ -17,7 +17,7 @@ class User:
         "cashier": "POS",
     }
 
-    def __init__(self, username, password, role="user"):
+    def __init__(self, username, password, role='user'):
         self.role = role
         self.username = username
         self.password = self.hash_password(password)

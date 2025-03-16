@@ -20,8 +20,8 @@
    <string>StoreHub - Point Of Sale</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -39,7 +39,7 @@
        <enum>Qt::LayoutDirection::LeftToRight</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -245,26 +245,84 @@
            <height>419</height>
           </rect>
          </property>
+         <widget class="QTableView" name="products_table_view">
+          <property name="geometry">
+           <rect>
+            <x>-5</x>
+            <y>1</y>
+            <width>791</width>
+            <height>421</height>
+           </rect>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </widget>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_3">
+       <widget class="QWidget" name="widget_3" native="true">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>20</y>
-          <width>281</width>
-          <height>21</height>
+          <y>0</y>
+          <width>551</width>
+          <height>61</height>
          </rect>
         </property>
-        <property name="text">
-         <string>Search product...</string>
-        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLineEdit" name="lineEdit_3">
+           <property name="inputMask">
+            <string>Search product...</string>
+           </property>
+           <property name="text">
+            <string>Searc prouct...</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="text">
+            <string>Import Products</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
         <string>Work Day</string>
        </attribute>
+       <widget class="QWidget" name="widget_4" native="true">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>123</width>
+          <height>78</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="text">
+            <string>Begin Work</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="text">
+            <string>End Work</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
@@ -294,4 +352,7 @@
  </widget>
  <resources/>
  <connections/>
+ <slots>
+  <slot>importProductsFromXLSX()</slot>
+ </slots>
 </ui>
