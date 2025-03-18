@@ -1,4 +1,4 @@
-from storage.wms import Wms
+from storage.wms_service import Wms
 
 
 class WmsHandler:

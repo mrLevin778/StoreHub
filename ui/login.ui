@@ -31,7 +31,7 @@
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="mainLayout">
+  <layout class="QVBoxLayout" name="centralLayout_2">
    <item>
     <widget class="QWidget" name="centralWidget" native="true">
      <layout class="QVBoxLayout" name="centralLayout">

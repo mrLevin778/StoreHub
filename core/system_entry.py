@@ -1,15 +1,12 @@
 import logging
-import sys
+
 from core.authsystem import AuthSystem
-from core.config import Config
 from core.user import User
-from core.router import Router
-from PySide6.QtWidgets import QApplication, QMessageBox, QDialog, QWidget
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-class Login:
+class SystemEntry:
     """Class for login form"""
 
     def __init__(self):
