@@ -39,7 +39,7 @@
        <enum>Qt::LayoutDirection::LeftToRight</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="dashboard_tab">
        <attribute name="title">
@@ -403,34 +403,295 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </widget>
        </widget>
       </widget>
-      <widget class="QWidget" name="arrival_tab">
+      <widget class="QWidget" name="orders_tab">
        <attribute name="title">
-        <string>Arrival</string>
+        <string>Замовлення</string>
+       </attribute>
+       <widget class="QTableView" name="orders_table">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>51</y>
+          <width>1241</width>
+          <height>461</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="bottomWidget" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>520</y>
+          <width>1231</width>
+          <height>44</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QPushButton" name="new_order_btn">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Створити замовлення</string>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="edit_order_btn">
+           <property name="text">
+            <string>Редагувати</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="change_order_status_btn">
+           <property name="text">
+            <string>Зміна статусу</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="remove_order_btn">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Видалити</string>
+           </property>
+           <property name="default">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QComboBox" name="change_orders_status_cbx">
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
+           </property>
+           <item>
+            <property name="text">
+             <string>Статус</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="change_order_status_many_btn">
+           <property name="text">
+            <string>Змінити масово</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="export_orders_excel_btn">
+           <property name="text">
+            <string>Експорт в Excel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="import_orders_excel_btn">
+           <property name="text">
+            <string>Імпорт з Excel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="topWidget" native="true">
+        <property name="geometry">
+         <rect>
+          <x>9</x>
+          <y>-1</y>
+          <width>1231</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QComboBox" name="status_filter_cbx">
+           <property name="currentText">
+            <string>Не обрано</string>
+           </property>
+           <property name="insertPolicy">
+            <enum>QComboBox::InsertPolicy::InsertAlphabetically</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
+           </property>
+           <item>
+            <property name="text">
+             <string>Не обрано</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Нове замовлення</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>В обробці</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Зібрано</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Чекає відправки</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Відправлено</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="sort_orders_cbx">
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
+           </property>
+           <item>
+            <property name="text">
+             <string>За датою</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>За статусом</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>За сумою</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="search_orders_input"/>
+         </item>
+         <item>
+          <widget class="QComboBox" name="check_search_cbx">
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
+           </property>
+           <item>
+            <property name="text">
+             <string>Номер замовлення</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Назва клієнта</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Назва товару</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="search_orders_btn">
+           <property name="text">
+            <string>Пошук</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="movings_tab">
+       <attribute name="title">
+        <string>Переміщення</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="shipment_tab">
+      <widget class="QWidget" name="returns_tab">
        <attribute name="title">
-        <string>Shipment</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="operations_tab">
-       <attribute name="title">
-        <string>Operations</string>
+        <string>Повернення</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="catalog_tab">
        <attribute name="title">
-        <string>Catalog</string>
+        <string>Товари</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="analytics_tab">
        <attribute name="title">
-        <string>Analytics</string>
+        <string>Аналітика</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="settings_tab">
        <attribute name="title">
-        <string>Settings</string>
+        <string>Налаштування</string>
        </attribute>
       </widget>
      </widget>

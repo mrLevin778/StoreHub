@@ -8,20 +8,14 @@ class PosUI(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.fullscreen_window()
         self.ui = UiLoader.load_ui('ui/pos.ui', self)
-        self.setFixedSize(self.ui.size())
+        self.fullscreen_window()
         self.pos_handler = PosHandler()
-        print(f'Elements(POS):')
-        for child in self.ui.children():
-            print(f'- {child.objectName()} ({child.__class__.__name__})')
-            print(f'Window: {self.ui.width()} x {self.ui.height()}')
-        self.ui.show()
-        self.card_pay_button = self.findChild(QPushButton, 'btnCard')
-        self.cash_pay_button = self.findChild(QPushButton, 'btnCash')
+        #self.ui.card_pay_button = self.findChild(QPushButton, 'btnCard')
+        #self.ui.cash_pay_button = self.findChild(QPushButton, 'btnCash')
         #  connect signals
-        self.card_pay_button.clicked.connect(self.handle_card_pay)
-        self.cash_pay_button.clicked.connect(self.handle_cash_pay)
+        #self.card_pay_button.clicked.connect(self.handle_card_pay)
+        #self.cash_pay_button.clicked.connect(self.handle_cash_pay)
 
     def fullscreen_window(self):
         screen = QApplication.primaryScreen().availableGeometry()
