@@ -3,7 +3,7 @@ import logging
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
 from storage.wms_service import Wms
 from core.ui_loader import UiLoader
-from storage.order_edit_ui import OrderEditUI
+from storage.order_edit_handler import OrderEditHandler
 
 
 class WmsUI(QMainWindow):
@@ -11,6 +11,7 @@ class WmsUI(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.order_handler = None
         self.new_order_btn = None
         logging.info('WmsUI window created.')
         self.wms_handler = Wms()
@@ -44,8 +45,8 @@ class WmsUI(QMainWindow):
 
     def open_order_editor(self, order_data=None):
         """Open window for editing order"""
-        order_window = OrderEditUI(self, order_data)
-        order_window.show()
+        self.order_handler = OrderEditHandler(self, order_data)
+        self.order_handler.show()
 
     def setup_movings_tab(self):
         pass
