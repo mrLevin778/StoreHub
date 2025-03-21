@@ -1,10 +1,52 @@
 import logging
+from sqlalchemy.future import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import SQLAlchemyError
+from db.db_models import Order
 
 
 class OrderEditService:
     """Class for business-logic"""
     def __init__(self, session=None):
         self.session = session
+
+    async def create_order(session: AsyncSession, order_data: dict):
+        """Crate new order"""
+        try:
+            new_order = Order(**order_data)
+            session.add(new_order)
+            await session.commit()
+            await session.refresh(new_order)
+            return new_order
+        except SQLAlchemyError as e:
+            await session.rollback()
+            logging.error(f'Creating order error: {e}')
+            return None
+
+    async def get_order(session: AsyncSession, order_id: int):
+        """Get order with id"""
+        try:
+            result = await session.execute(select(Order).filter(Order.id == order_id))
+            return result.scalars().first()
+        except SQLAlchemyError as e:
+            logging.error(f'Getting order error: {e}')
+            return None
+
+    async def update_order(session: AsyncSession, order_id: int, update_data: dict):
+        """Update order"""
+        try:
+            result = await session.execute(select(Order).filter(Order.id == order_id))
+            order = result.scalars().first()
+            if order:
+                for key, value in update_data.items():
+                    setattr(order, key, value)
+                await session.commit()
+                await session.refresh(order)
+            return order
+        except SQLAlchemyError as e:
+            await session.rollback()
+            logging.error(f'Updating order error: {e}')
+            return None
 
     def generate_order_number(self) -> str:
         """Generate order number in format Sxxxxxxxxxx(S - fixed symbol, xxxxxxxxxx - 10-digit"""

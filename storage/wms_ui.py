@@ -1,7 +1,7 @@
 import logging
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
-from storage.wms_service import Wms
+from storage.wms_service import WmsService
 from core.ui_loader import UiLoader
 from storage.order_edit_handler import OrderEditHandler
 
@@ -14,7 +14,7 @@ class WmsUI(QMainWindow):
         self.order_handler = None
         self.new_order_btn = None
         logging.info('WmsUI window created.')
-        self.wms_handler = Wms()
+        self.wms_handler = WmsService()
         self.ui = UiLoader.load_ui('ui/wms.ui', self)
         self.fullscreen_window()
         self._setup_tabs()

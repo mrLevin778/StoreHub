@@ -1,16 +1,16 @@
-from core.ext_db import ShopDatabase
+from core.ext_db import Database
 from db.db_models import Product
 from core.config import Config
 import pandas as pd
 
 
-class Wms:
+class WmsService:
     """Main class for Warehouse Management System in StoreHub"""
 
     def __init__(self):
         super().__init__()
         self.config = Config()
-        self.db = ShopDatabase()
+        self.db = Database()
 
     def import_from_excel(self, filepath):
         session = self.db.get_session()

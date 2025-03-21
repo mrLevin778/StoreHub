@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, Table
 from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.ext.asyncio import AsyncAttrs
 import logging
 from datetime import datetime
 
@@ -14,7 +15,7 @@ order_items = Table(
 )
 
 
-class Category(Base):
+class Category(Base, AsyncAttrs):
     """Sheet for products categories"""
     __tablename__ = 'categories'
     id = Column(Integer, primary_key=True)
@@ -25,7 +26,7 @@ class Category(Base):
         return f'<Category(name={self.name})>'
 
 
-class Product(Base):
+class Product(Base, AsyncAttrs):
     """Sheet for products"""
     __tablename__ = 'products'
     id = Column(Integer, primary_key=True)
@@ -42,7 +43,7 @@ class Product(Base):
         return f'<Product(name={self.name}, barcode={self.barcode})>'
 
 
-class Sale(Base):
+class Sale(Base, AsyncAttrs):
     """Sheet for sales"""
     __tablename__ = 'sales'
     id = Column(Integer, primary_key=True)
@@ -53,7 +54,7 @@ class Sale(Base):
     product = relationship('Product')
 
 
-class User(Base):
+class User(Base, AsyncAttrs):
     """Sheet for users"""
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
@@ -62,7 +63,7 @@ class User(Base):
     role = Column(String, nullable=False)
 
 
-class Order(Base):
+class Order(Base, AsyncAttrs):
     __tablename__ = 'orders'
     id = Column(Integer, primary_key=True)
     number = Column(String(11), unique=True, nullable=False)
