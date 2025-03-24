@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import sessionmaker, scoped_session
 from core.config import Config
 import logging
@@ -36,7 +36,7 @@ class Database:
                 db_url = self.config.get('shop_db_url')
                 self.engine = create_async_engine(db_url, echo=True)
                 logging.info('Crete async engine for PostgreSQL')
-            self.Session = scoped_session(sessionmaker(bind=self.engine, class_=AsyncSession, expire_on_commit=False))
+            self.Session = async_sessionmaker(bind=self.engine, expire_on_commit=False)
         except SQLAlchemyError as e:
             logging.error(f'Error connecting to database: {e}')
             raise
@@ -54,7 +54,7 @@ class Database:
             raise
         logging.info('Database schema created successfully.')
 
-    async def get_session(self):
+    async def get_session(self) -> AsyncSession:
         """Return new database session"""
         if self.Session is None:
             await self.connect()
