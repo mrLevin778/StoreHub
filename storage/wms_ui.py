@@ -2,6 +2,8 @@ import asyncio
 import logging
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
+
+from storage.wms_handler import WmsHandler
 from storage.wms_service import WmsService
 from core.ui_loader import UiLoader
 from storage.order_edit_handler import OrderEditHandler
@@ -15,7 +17,7 @@ class WmsUI(QMainWindow):
         self.order_handler = None
         self.new_order_btn = None
         logging.info('WmsUI window created.')
-        self.wms_handler = WmsService()
+        self.wms_handler = WmsHandler()
         self.ui = UiLoader.load_ui('ui/wms.ui', self)
         self.fullscreen_window()
         self._setup_tabs()
@@ -65,4 +67,4 @@ class WmsUI(QMainWindow):
         pass
 
     def import_excel(self):
-        Wms.import_from_excel('tools/test_products.xlsx')
+        pass

@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 from sqlalchemy import select
@@ -10,14 +11,10 @@ from core.ext_db import Database
 
 class OrderEditService:
     """Class for business-logic"""
-    def __init__(self, session=None):
-        if session is None:
-            self.session = self._get_session()
-        else:
-            self.session = session
 
-    async def _get_session(self):
-        await Database().get_session()
+    def __init__(self, session=None):
+        self.db = Database()
+        self.session = session
 
     async def create_order(self, order_data: dict):
         """Crate new order"""

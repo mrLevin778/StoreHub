@@ -18,6 +18,7 @@ class OrderEditHandler(QObject):
         self.ui = OrderEditUI(parent, order_data)
         self.service = OrderEditService()
         self.db = Database()
+        self.thread = QThread()
         self.session = None
         self._connect_signals()
         if order_data:
@@ -25,6 +26,15 @@ class OrderEditHandler(QObject):
         else:
             generated_number = self.service.generate_order_number()
             self.ui.order_number.setText(generated_number)
+        self.start_async_setup()
+
+    def start_async_setup(self):
+        """Run DB init"""
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            asyncio.create_task(self.init_db())
+        else:
+            asyncio.run(self.init_db())
 
     async def init_db(self):
         """Async database session init"""
@@ -38,7 +48,6 @@ class OrderEditHandler(QObject):
 
     def on_save_order(self):
         """Run save order in separate thread"""
-        self.thread = QThread()
         self.thread.started.connect(self.save_order_in_thread)
         self.thread.finished.connect(self.on_thread_finished)
         self.thread.start()
@@ -52,11 +61,11 @@ class OrderEditHandler(QObject):
             order_details = self.ui.get_order_details()
             order_details['date'] = self.service.convert_qdate(order_details['date'])
             order_details['end_date'] = self.service.convert_qdate(order_details['end_date'])
-            loop.run_until_complete(self.init_db())
+            #loop.run_until_complete(self.init_db())
             new_order = loop.run_until_complete(self.service.save_order(order_details))
             if new_order:
                 self.order_saved.emit(new_order.id)
-                self.ui.close()
+                #self.ui.close()
             else:
                 self.order_error.emit('Error saving order.')
         except Exception as e:
@@ -64,13 +73,24 @@ class OrderEditHandler(QObject):
             if hasattr(self, 'order_error'):
                 self.order_error.emit(str(e))
         finally:
+            logging.info('Closing asyncio event loop......')
             loop.close()
-            logging.info('Event loop is closed.')
+            logging.info('Asyncio event loop is closed.')
+            self.thread.quit()
+            self.thread.wait()
+            self.thread.deleteLater()
 
     def on_thread_finished(self):
         """Called when thread is finished"""
         logging.info('Thread finished.')
+        self.thread.quit()
+        self.thread.wait()
+        self.thread.deleteLater()
         self.ui.close()
+        if self.thread.isRunning():
+            logging.warning('Thread is still running!')
+        else:
+            logging.info('Thread has successfully finished.')
 
     def cancel_order(self):
         """Cancel order editing"""
