@@ -12,6 +12,7 @@ class WmsService:
         self.config = Config()
         self.db = Database()
 
+
     def import_from_excel(self, filepath):
         session = self.db.get_session()
         try:

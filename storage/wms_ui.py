@@ -1,7 +1,8 @@
 import asyncio
 import logging
 from PySide6.QtCore import QTimer
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QTableView
+from PySide6.QtCore import QObject, QTimer
 
 from storage.wms_handler import WmsHandler
 from storage.wms_service import WmsService
@@ -16,6 +17,7 @@ class WmsUI(QMainWindow):
         super().__init__()
         self.order_handler = None
         self.new_order_btn = None
+        self.orders_table = None
         logging.info('WmsUI window created.')
         self.wms_handler = WmsHandler()
         self.ui = UiLoader.load_ui('ui/wms.ui', self)
@@ -35,21 +37,14 @@ class WmsUI(QMainWindow):
         self.setup_catalog_tab()
         self.setup_analytics_tab()
         self.setup_settings_tab()
-        self._set_signals_orders_tab()
 
     def setup_dashboard_tab(self):
         pass
 
     def setup_orders_tab(self):
         self.new_order_btn = self.ui.findChild(QPushButton, 'new_order_btn')
-
-    def _set_signals_orders_tab(self):
-        self.new_order_btn.clicked.connect(lambda: self.open_order_editor())
-
-    def open_order_editor(self, order_data=None):
-        """Open window for editing order"""
-        self.order_handler = OrderEditHandler(self, order_data)
-        self.order_handler.show()
+        # main table with orders
+        self.orders_table = self.ui.findChild(QTableView, 'orders_table')
 
     def setup_movings_tab(self):
         pass
